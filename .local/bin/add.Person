@@ -1,0 +1,3 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+eval "$(cat ~/create-person.sh | name=${1:?"Error: argument \$1 required!"} mush)"
