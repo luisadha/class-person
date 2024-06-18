@@ -3,8 +3,19 @@ script Person.sh adalah skrip untuk generate konten biodata json menggunakan bas
 
 # depend
 * mush
+* sed
+* grep
+* yq & jq
 
-# call
+# Teknologi yang digunakan
+* yml
+* json
+
+# language & API
+* bash
+* mush
+
+# Oneliner execute
 ```bash
 eval "$(cat ./person.sh | name=john mush)"
 
