@@ -1,6 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Fungsi untuk membuat "kelas" Person baru
-#
 # name: create-person.sh 
 # version: v0.02
 # status: [TESTING PASS]
@@ -10,10 +9,11 @@
 #if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then  echo -e "warn: Wrong move, you should type \`bash ${BASH_SOURCE[0]}' not \`source ${BASH_SOURCE[@]}'." 1>&2;  return 1; fi
 
 #if [[ ! $- =~ i ]]; then  echo -e "warn: Wrong move, you should type \`bash ${0}' not \`source ${0}'." 1>&2;  exit 1; fi
-#
-
 CUSTOM_DIR="$HOME"
 PROFILE="$HOME/@/@t.me/{{name}}/{{name}}_profile.yml"
+
+
+#fi
 
 Person() {
     local self=$1
@@ -104,12 +104,24 @@ JOB=$(yq eval ".JOB" $PROFILE)
 {{name}}.setHobbies "${HOBBIES:-null}"
 {{name}}.setJob "\"${JOB:-null}\""
 
-
+local IS_AUTHOR={{name}}
 # Menampilkan informasi
+#
 
 echo -e "JSON FORMAT OUTPUT: \n "
 {{name}}.getInfo | sed "s/'/\"/g" | jq .
 
+#[[ $CODE_NF -eq 404 ]] && echo 404
+#read a < <(echo $(curl -X GET "https://api.gravatar.com/v3/profiles/${profileIdentifier}" -H "Authorization: Bearer ${TOKEN}" -s | jq . | jq '.profile_url' ));
+read IS_GRAVATAR_USER < <(echo $(curl -X GET "https://api.gravatar.com/v3/profiles/${profileIdentifier}" -H "Authorization: Bearer ${TOKEN}" -s | jq ".profile_url" | grep -o "luisadha"))
+
+if [ "$IS_AUTHOR" == "$IS_GRAVATAR_USER" ]; then
+
+curl -X GET "https://api.gravatar.com/v3/profiles/${profileIdentifier}" -H "Authorization: Bearer ${TOKEN}" -s | jq . 
+fi
+
+
+  #fi
 #echo -e "\nARRAY FORMAT:\n " && declare -A | grep "{{name}}" 
   return 0
 }
